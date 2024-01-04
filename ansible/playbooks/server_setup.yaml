@@ -24,6 +24,16 @@
     #- name: Copy Keys
     #  ansible.builtin.command: ssh-copy-id {{ username }}@{{ hostname }}
 
+    - name: Create Ansible User
+      ansible.builtin.user:
+        name: "{{var_ansible_user}}"
+        state: present
+        createhome: yes
+        home: /home/{{var_ansible_user}}
+        password: "{{var_ansible_pass}}"
+        groups: sudo
+        append: yes
+
     - name: Copy Keys
       ansible.posix.authorized_key:
         user: "{{var_ansible_user}}"
