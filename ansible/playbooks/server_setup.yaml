@@ -30,7 +30,7 @@
         state: present
         createhome: yes
         home: /home/{{var_ansible_user}}
-        password: "{{var_ansible_pass}}"
+        password: "{{var_ansible_pass | ansible.builtin.password_hash}}"
         groups: sudo
         append: yes
 
