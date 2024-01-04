@@ -3,19 +3,6 @@
 - hosts: localhost
   become: no
 
-  vars_prompt:
-    - name: friendlyname
-      prompt: What name is used to specify PVE node?
-      private: false
-
-    - name: username
-      prompt: What username is used to SSH to PVE node?
-      private: false
-
-    - name: hostname
-      prompt: What hostname or ip address is used to SSH to PVE node?
-      private: false
-
   tasks:
     #- name: Delete Config File
     #  ansible.builtin.file:
@@ -35,5 +22,12 @@
     #          User {{ username }}
     #          HostName {{ hostname }}
 
+
+    #- name: Copy Keys
+    #  ansible.builtin.command: ssh-copy-id {{ username }}@{{ hostname }}
+
     - name: Copy Keys
-      ansible.builtin.command: ssh-copy-id {{ username }}@{{ hostname }}
+      ansible.posix.authorized_key:
+        user: "{{var_ansible_user}}"
+        state: present
+        key: "{{var_ansible_ssh_pubkey}}"
