@@ -1,8 +1,6 @@
 ---
 # Proxmox SSH Setup
-- hosts: localhost
-  become: no
-
+- hosts: all
   tasks:
     #- name: Delete Config File
     #  ansible.builtin.file:
